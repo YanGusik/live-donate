@@ -10,7 +10,7 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class SendDonationNotification
+class SendDonationNotification implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -27,11 +27,6 @@ class SendDonationNotification
 
     public function broadcastOn()
     {
-        return new PresenceChannel('donate');
-    }
-
-    public function broadcastAs()
-    {
-        return 'donate';
+        return new Channel('home');
     }
 }

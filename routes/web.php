@@ -17,9 +17,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/donate', function () {
-    event(new \App\Events\SendDonationNotification('YanGus', 560.1));
-});
+Route::get('/r/{nickname}', function (string $nickname) {
+   return \Inertia\Inertia::render('Payment',
+       [
+           'nickname' => $nickname
+       ]);
+})->name('payment');
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return Inertia\Inertia::render('Dashboard');
