@@ -18,9 +18,11 @@ class CreatePaymentsTable extends Migration
             $table->integer('amount');
             $table->string('email');
             $table->string('currency');
+            $table->string('type_payment');
             $table->string('nickname');
             $table->unsignedBigInteger('user_id');
             $table->string('message')->nullable();
+            $table->string('status');
             $table->timestamps();
         });
     }

@@ -10,4 +10,8 @@ class Payment extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    const NEW = 'new';
+    const PAID = 'paid';
+    const CANCELLED = 'cancelled';
 }

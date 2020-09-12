@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Payment\PaymentsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,12 +18,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/r/{nickname}', function (string $nickname) {
-   return \Inertia\Inertia::render('Payment',
-       [
-           'nickname' => $nickname
-       ]);
-})->name('payment');
+Route::get('/r/{nickname}', [PaymentsController::class, 'show'])->name('payment');
+Route::get('/c/{nickname}', [PaymentsController::class, 'show'])->name('payment');
+Route::post('/payments/pay', [PaymentsController::class, 'pay']);
+Route::get('/payments/completed', [PaymentsController::class, 'completed']);
+Route::get('/payments/cancelled', [PaymentsController::class, 'cancelled']);
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return Inertia\Inertia::render('Dashboard');

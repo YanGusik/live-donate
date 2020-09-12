@@ -22,11 +22,10 @@ class SendDonationNotification implements ShouldBroadcast
         //
         $this->nickname = $nickname;
         $this->price = $price;
-        logger()->info('event SendDonationNotification');
     }
 
     public function broadcastOn()
     {
-        return new Channel('home');
+        return new Channel('alert');
     }
 }

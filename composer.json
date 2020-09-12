@@ -55,6 +55,10 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "scripts": {
+        "ide": [
+            "php artisan ide-helper:generate",
+            "php artisan ide-helper:meta"
+        ],
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
             "@php artisan package:discover --ansi"
