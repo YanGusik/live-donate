@@ -67,7 +67,7 @@ class PaymentTest extends TestCase
     public function user_can_create_a_new_payment_without_redirect()
     {
         $this->withoutExceptionHandling();
-
+        $this->expectsEvents(SendDonationNotification::class);
         $response = $this->json('post', "/payments/pay", [
             'email' => 'test@yandex.ru',
             'amount' => 10,
@@ -77,13 +77,12 @@ class PaymentTest extends TestCase
             'user_id' => $this->streamer->id,
             'message' => 'I love you'
         ]);
-
         $response->assertStatus(200);
         $this->assertEquals(1, Payment::count());
         $response->assertJson([
             'status' => 'success'
         ]);
-        $this->expectsEvents(SendDonationNotification::class);
+        // THIS TEST WORK WITH (NOT REAL|TEST) BILLING SYSTEM, test is not completed
     }
 
     /** @test */
