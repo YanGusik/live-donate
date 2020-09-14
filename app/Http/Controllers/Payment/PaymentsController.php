@@ -45,7 +45,10 @@ class PaymentsController extends Controller
     {
         return \Inertia\Inertia::render('Payment',
             [
-                'nickname' => $nickname
+                'user' => [
+                    'nickname' => $nickname,
+                    'profile_image' => $nickname == 'YanGusik' ? '/mem.png' : 'https://cdn.discordapp.com/avatars/338416806408486913/70b6b7fbc821165eeb30d37a568af66c.png?size=128'
+                ]
             ]);
     }
 
