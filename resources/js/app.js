@@ -12,6 +12,7 @@ Vue.use(PortalVue);
 
 const app = document.getElementById('app');
 
+
 new Vue({
     render: (h) =>
         h(InertiaApp, {

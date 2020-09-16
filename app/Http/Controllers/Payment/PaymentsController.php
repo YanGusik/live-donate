@@ -92,7 +92,7 @@ class PaymentsController extends Controller
             $payment = Payment::Find($payment->id);
             $payment->status = Payment::PAID;
             $payment->save();
-            event(new SendDonationNotification($payment->nickname, $payment->amount));
+            event(new SendDonationNotification($payment->streamer->alert_token, $payment->nickname, $payment->message, $payment->amount));
             return response()->json($response->getMessage());
         } else {
             // payment failed: display message to customer
@@ -121,7 +121,7 @@ class PaymentsController extends Controller
                 $payment = Payment::Find($response->getPayment()['id']);
                 $payment->status = Payment::PAID;
                 $payment->save();
-                event(new SendDonationNotification($payment->nickname, $payment->amount));
+                event(new SendDonationNotification($payment->streamer->alert_token, $payment->nickname, $payment->message, $payment->amount));
                 $data = [
                     'status' => 'success',
                     'message' => 'yupi'

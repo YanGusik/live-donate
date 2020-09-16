@@ -14,18 +14,21 @@ class SendDonationNotification implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    private $nickname;
-    private $price;
+    public $token;
+    public $nickname;
+    public $message;
+    public $amount;
 
-    public function __construct(string $nickname, float $price)
+    public function __construct(string $token, string $nickname, string $message, float $amount)
     {
-        //
+        $this->token = $token;
         $this->nickname = $nickname;
-        $this->price = $price;
+        $this->message = $message;
+        $this->amount = $amount;
     }
 
     public function broadcastOn()
     {
-        return new Channel('alert');
+        return new Channel('alert.'.$this->token);
     }
 }

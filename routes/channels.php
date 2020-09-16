@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Support\Facades\Broadcast;
 
 /*
@@ -17,6 +18,9 @@ use Illuminate\Support\Facades\Broadcast;
 //    return (int) $user->id === (int) $id;
 //});
 
-Broadcast::channel('alert', function () {
-    return 1;
+Broadcast::channel('alert.{token}', function (string $token) {
+    $user = User::whereAlertToken($token)->first();
+    if (isset($user)) {
+        return $user->name;
+    }
 });

@@ -3,12 +3,17 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Str;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
 
+/**
+ * @mixin IdeHelperUser
+ */
 class User extends Authenticatable
 {
     use HasApiTokens;
@@ -26,6 +31,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'alert_token',
     ];
 
     /**
@@ -36,6 +42,7 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+        'alert_token',
         'two_factor_recovery_codes',
         'two_factor_secret',
     ];
@@ -62,8 +69,22 @@ class User extends Authenticatable
      * define HasMany relationship
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function payments()
+    public function payments(): HasMany
     {
         return $this->hasMany(Payment::class, 'user_id');
+    }
+
+    /**
+     * Create unique alert token
+     *
+     * @return string
+     */
+    protected function generateAlertToken(): string
+    {
+        $token = Hash('sha256', Str::random(40));
+        while (self::where('alert_token', $token)->count() != 0) {
+            $token = Hash('sha256', Str::random(40));
+        }
+        return $token;
     }
 }

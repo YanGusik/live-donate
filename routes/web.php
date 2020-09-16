@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Payment\PaymentsController;
+use App\Http\Controllers\Widget\AlertController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,6 +24,9 @@ Route::get('/c/{nickname}', [PaymentsController::class, 'show'])->name('payment'
 Route::post('/payments/pay', [PaymentsController::class, 'pay']);
 Route::get('/payments/completed', [PaymentsController::class, 'completed']);
 Route::get('/payments/cancelled', [PaymentsController::class, 'cancelled']);
+
+
+Route::get('/widget/alerts/{token}', [AlertController::class, 'index']);
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return Inertia\Inertia::render('Dashboard');
