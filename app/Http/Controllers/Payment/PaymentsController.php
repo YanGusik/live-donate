@@ -46,6 +46,7 @@ class PaymentsController extends Controller
         return \Inertia\Inertia::render('Payment',
             [
                 'user' => [
+                    'id' => 1,
                     'nickname' => $nickname,
                     'profile_image' => $nickname == 'YanGusik' ? '/mem.png' : 'https://cdn.discordapp.com/avatars/338416806408486913/70b6b7fbc821165eeb30d37a568af66c.png?size=128'
                 ]
@@ -61,8 +62,8 @@ class PaymentsController extends Controller
     {
         $request->validate([
             'email' => 'required|email',
-            'amount' => 'required|integer',
-            'currency' => 'required|string',
+            'amount' => 'required|integer|min:1',
+            'currency' => ['required', Rule::in(['rub', 'usd', 'euro'])],
             'type_payment' => ['required', Rule::in(PaymentType::TYPES)],
             'nickname' => 'required|string',
             'message' => 'string:null',
@@ -88,7 +89,7 @@ class PaymentsController extends Controller
             // redirect to offsite payment gateway
             return response()->json($response->getRedirect());
         } elseif ($response->isSuccessful()) {
-            $payment = Payment::Find($response->getPayment()['id']);
+            $payment = Payment::Find($payment->id);
             $payment->status = Payment::PAID;
             $payment->save();
             event(new SendDonationNotification($payment->nickname, $payment->amount));
@@ -137,9 +138,9 @@ class PaymentsController extends Controller
             }
         }
 
-        return \Inertia\Inertia::render('PaymentStatus',
+        return \Inertia\Inertia::render('Payment',
             [
-                'data' => $data
+                'redirect_data' => $data
             ]);
     }
 

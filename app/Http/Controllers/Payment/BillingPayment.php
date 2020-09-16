@@ -66,7 +66,7 @@ class BillingPayment
     {
         return [
             'status' => 'redirect',
-            'url' => 'paypal.ru'
+            'url' => 'https://paypal.ru'
         ];
     }
 

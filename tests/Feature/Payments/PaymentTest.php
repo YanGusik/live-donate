@@ -144,7 +144,7 @@ class PaymentTest extends TestCase
         $this->assertEquals(0, Payment::count());
     }
 
-    // Тип платежа должен быть обслуживаемым в системе, мол нельзя использовать QIWI, если я обслуживаю только paypal
+    // Тип платежа должен быть обслуживаемым в системе, мол нельзя использовать WEBMONEY, если я обслуживаю только paypal
 
     /** @test */
     public function payment_type_field_should_be_serviceable_to_create_a_payment()
@@ -153,7 +153,7 @@ class PaymentTest extends TestCase
             'email' => 'test@yandex.ru',
             'amount' => 10,
             'currency' => 'rub',
-            'payment_type' => 'qiwi',
+            'payment_type' => 'webmoney',
             'nickname' => 'Vlad',
             'user_id' => 2222,
             'message' => 'I love you'
