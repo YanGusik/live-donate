@@ -1,7 +1,7 @@
 <?php
 
 
-namespace AlertDonation;
+namespace Tests\Feature\Widget;
 
 use App\Events\SendDonationNotification;
 use App\Models\Payment;
@@ -9,7 +9,7 @@ use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class AlertDonationTest extends TestCase
+class AlertTest extends TestCase
 {
     use RefreshDatabase;
 
