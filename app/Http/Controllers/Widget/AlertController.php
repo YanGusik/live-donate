@@ -8,11 +8,16 @@ use Illuminate\Http\Request;
 
 class AlertController extends Controller
 {
+    /***
+     * @param string $token
+     * @return \Inertia\Response
+     */
     public function index(string $token)
     {
         $user = User::whereAlertToken($token)->firstOrFail();
         return \Inertia\Inertia::render('Alert',
-            ['user' => $user->toArray(),
+            [
+                'user' => $user->toArray(),
                 'token' => $token
             ]);
     }

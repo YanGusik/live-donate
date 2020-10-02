@@ -8,9 +8,9 @@
                 <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-16">
                     <div class="mb-4 flex items-center">
                         <div class="rounded-full h-16 w-16 bg-cover"
-                             :style="'background-image: url(' + this.user.profile_image + ')'">
+                             :style="'background-image: url(' + this.user.profile_photo_url + ')'">
                         </div>
-                        <span class=" ml-4">{{ this.user.nickname }}</span>
+                        <span class=" ml-4">{{ this.user.name }}</span>
                     </div>
                     <div class="mb-4">
                         <action-message on="true" v-for="(error, index) in this.errors" :key="index">
@@ -244,7 +244,7 @@ export default {
         }
 
         console.log(this.redirect_data);
-        console.log(this.nickname);
+        console.log(this.user);
         console.log(this.goals);
     }
 }

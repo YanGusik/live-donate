@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Dashboard\AlertVariationsController;
+use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Payment\PaymentsController;
 use App\Http\Controllers\Widget\AlertController;
 use Illuminate\Support\Facades\Route;
@@ -25,9 +27,15 @@ Route::post('/payments/pay', [PaymentsController::class, 'pay']);
 Route::get('/payments/completed', [PaymentsController::class, 'completed']);
 Route::get('/payments/cancelled', [PaymentsController::class, 'cancelled']);
 
+Route::group(['middleware' => ['auth:sanctum', 'verified'], 'prefix' => 'dashboard'], function () {
+    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/alert-widget', [AlertVariationsController::class, 'index']);
+    Route::post('/alert-variations/store', [AlertVariationsController::class, 'store']);
+    Route::post('/alert-variations/edit/{id}', [AlertVariationsController::class, 'update']);
+    Route::post('/alert-variations/remove/{id}', [AlertVariationsController::class, 'remove']);
+});
 
-Route::get('/widget/alerts/{token}', [AlertController::class, 'index']);
+Route::group(['prefix' => 'widget'], function () {
+    Route::get('/alerts/{token}', [AlertController::class, 'index']);
+});
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-    return Inertia\Inertia::render('Dashboard');
-})->name('dashboard');

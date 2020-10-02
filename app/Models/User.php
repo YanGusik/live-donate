@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Observers\UserObserver;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -65,6 +66,7 @@ class User extends Authenticatable
         'profile_photo_url',
     ];
 
+
     /**
      * define HasMany relationship
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
@@ -72,6 +74,15 @@ class User extends Authenticatable
     public function payments(): HasMany
     {
         return $this->hasMany(Payment::class, 'user_id');
+    }
+
+    /**
+     * define HasMany relationship
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function variations(): HasMany
+    {
+        return $this->hasMany(Variation::class, 'user_id');
     }
 
     /**

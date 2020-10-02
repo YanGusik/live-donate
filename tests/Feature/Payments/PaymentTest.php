@@ -27,13 +27,19 @@ class PaymentTest extends TestCase
     }
 
     /** @test */
-    public function user_can_see_a_form_for_creating_new_payment()
+    public function user_can_see_donation_form_for_existing_streamer()
     {
         $this->withoutExceptionHandling();
 
         $this->get("/r/{$this->streamer->name}")
             ->assertStatus(200)
             ->assertInertia('Payment');
+    }
+
+    /** @test */
+    public function user_can_not_see_donation_form_for_non_existent_streamer()
+    {
+        $this->get("/r/LAXnACE")->assertStatus(404);
     }
 
     /** @test */
